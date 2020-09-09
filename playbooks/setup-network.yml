@@ -1,0 +1,27 @@
+---
+- hosts: all
+  vars_files:
+    - 'playbooks_vars/hosts.yml'
+  tasks:
+    - name: Change Windows IP Address
+      win_shell: netsh interface ipv4 set address name="Ethernet" static "{{ item.ip }}" 255.255.255.0 192.168.1.1
+      when: 
+        - "{{ ansible_hostname == item.host }}"
+        - ansible_os_family == "Windows"
+      with_items: "{{ hostinfo }}"
+
+    - name: Change Linux IP Address
+      become: yes
+      become_user: root
+      blockinfile:
+        path: /etc/dhcpcd.conf
+        backup: yes
+        block: |
+          interface {{ item.connection }}
+          static ip_address={{ item.ip }}/24
+          static routers=192.168.1.1
+          static domain_name_servers=192.168.1.1
+      when: 
+        - ansible_os_family == "Debian"
+        - "{{ ansible_hostname == item.host }}"
+      with_items: "{{ hostinfo }}"

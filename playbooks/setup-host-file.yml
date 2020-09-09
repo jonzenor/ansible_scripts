@@ -1,0 +1,23 @@
+---
+- hosts: windows
+  tasks:
+    - name: Add Jon PC
+      win_hosts:
+        state: present
+        canonical_name: znet-jon
+        ip_address: 192.168.1.150
+      when: ansible_os_family == "Windows"
+
+    - name: Add Danae PC
+      win_hosts:
+        state: present
+        canonical_name: znet-danae
+        ip_address: 192.168.1.151
+      when: ansible_os_family == "Windows"
+
+    - name: Add Malikai PC
+      win_hosts:
+        state: present
+        canonical_name: znet-malikai
+        ip_address: 192.168.1.152
+      when: ansible_os_family == "Windows"

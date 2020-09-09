@@ -1,0 +1,7 @@
+---
+- name: Build host file on Windows
+  win_hosts:
+    state: present
+    canonical_name: "{{ item.name }}"
+    ip_address: "{{ item.ip }}"
+  with_items: "{{ hostinfo }}"

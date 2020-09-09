@@ -1,0 +1,16 @@
+---
+- hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Reboot Windows systems
+      win_reboot:
+        msg: "System reboot initiated...."
+        post_reboot_delay: 10
+        pre_reboot_delay: 10
+      when: ansible_os_family == "Windows"
+
+    - name: Reboot Linux Systems
+      become: yes
+      become_user: root
+      reboot:
+      when: ansible_os_family == "Debian"

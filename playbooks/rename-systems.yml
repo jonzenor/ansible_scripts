@@ -1,0 +1,23 @@
+---
+- hosts: all
+  vars_files:
+    - 'playbooks_vars/hosts.yml'
+  tasks:
+    - name: Rename Windows Systems
+      win_hostname: 
+        name: "{{ item.name }}"
+      when: 
+        - "{{ ansible_hostname == item.host }}"
+        - ansible_os_family == "Windows"
+      with_items: "{{ hostinfo }}"
+
+  tasks:
+   - name: Rename Linux Systems
+     become: yes
+     become_user: root
+     hostname:
+       name: "{{ item.name }}"
+     when:
+       - "{{ ansible_hostname == item.host }}"
+       - ansible_os_family == "Debian"
+     with_items: "{{ hostinfo }}"

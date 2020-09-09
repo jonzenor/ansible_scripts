@@ -1,0 +1,17 @@
+---
+- name: Create Jon's Windows Account
+  win_user:
+    name: jonz
+    password: "{{ jon_password }}"
+    fullname: Jon Zenor
+    state: present
+    groups: Users, Administrators
+
+- name: Create Malikai's Windows Account
+  win_user:
+    name: malikaiz
+    password: "{{ malikai_password }}"
+    fullname: Malikai Zenor
+    state: present
+    groups: Users
+

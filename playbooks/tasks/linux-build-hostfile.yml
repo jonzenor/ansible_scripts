@@ -1,0 +1,11 @@
+---
+- name: Build host file on Linux
+  become: yes
+  become_user: root
+  lineinfile:
+    dest: /etc/hosts
+    regexp: '.*{{ item.name }}$'
+    line: "{{ item.ip }} {{ item.name }}"
+    state: present
+  with_items: "{{ hostinfo }}"
+

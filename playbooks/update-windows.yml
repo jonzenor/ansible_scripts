@@ -1,0 +1,16 @@
+---
+- hosts: windows
+  gather_facts: no
+  tasks:
+    - name: Update Windows Computers
+      win_updates:
+        category_names:
+          - SecurityUpdates
+          - CriticalUpdates
+          - UpdateRollups
+        state: installed
+      register: update_result
+
+    - name: Rebook host if required
+      win_reboot:
+      when: update_result.reboot_required

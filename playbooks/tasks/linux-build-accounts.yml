@@ -1,0 +1,23 @@
+---
+- name: Create Jon's Linux Account
+  become: yes
+  become_user: root
+  user:
+    name: jonz
+    password: "{{ jon_password | password_hash('sha512') }}"
+    shell: /bin/bash
+    groups: sudo,audio,video,plugdev,games,users,netdev
+    comment: Jon Zenor
+    state: present
+
+- name: Create Malikai's Linux Account
+  become: yes
+  become_user: root
+  user:
+    name: malikaiz
+    password: "{{ malikai_password | password_hash('sha512') }}"
+    shell: /bin/bash
+    groups: audio,video,plugdev,games,users,netdev
+    comment: Malikai Zenor
+    state: present
+

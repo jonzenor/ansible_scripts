@@ -1,0 +1,10 @@
+---
+- hosts: all
+  vars_files:
+    - 'playbooks_vars/hosts.yml'
+  tasks:
+    - include_tasks: tasks/linux-build-hostfile.yml
+      when: ansible_os_family == "Debian"
+    - include_tasks: tasks/windows-build-hostfile.yml
+      when: ansible_os_family == "Windows"
+

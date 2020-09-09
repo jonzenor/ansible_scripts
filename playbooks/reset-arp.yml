@@ -1,0 +1,5 @@
+---
+- hosts: windows
+  tasks:
+    - name: Delete ARP Table
+      win_shell: arp -d

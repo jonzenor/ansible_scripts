@@ -1,0 +1,10 @@
+---
+- hosts: all
+  vars_files:
+    - 'playbooks_vars/jonpass.yml'
+    - 'playbooks_vars/malikaipass.yml'
+  tasks:
+    - import_tasks: tasks/windows-build-accounts.yml
+      when: ansible_os_family == "Windows"
+    - import_tasks: tasks/linux-build-accounts.yml
+      when: ansible_os_family == "Debian"
